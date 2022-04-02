@@ -8,11 +8,13 @@ const imageKey = 'card-back';
 export class CardObj extends Phaser.GameObjects.Container {
   card: CardData;
   homePoint: Phaser.Math.Vector2;
+  onDrag: Function;
 
-  constructor(scene: Phaser.Scene, card: CardData, homePoint: Phaser.Math.Vector2) {
+  constructor(scene: Phaser.Scene, card: CardData, homePoint: Phaser.Math.Vector2, onDrag: Function) {
     super(scene);
     this.card = card;
     this.homePoint = homePoint;
+    this.onDrag = onDrag;
     scene.add.existing(this);
   }
 
@@ -66,6 +68,8 @@ export class CardObj extends Phaser.GameObjects.Container {
         scale: 1.3,
         duration: 40,
       });
+
+      this.onDrag(this);
     });
 
     this.tweenHome();

@@ -4,55 +4,61 @@ import { tweenPromise } from './utils';
 
 const imageKey = 'cubicle';
 
-export class CubicleObj {
-  sprite!: Phaser.GameObjects.Image;
+export class CubicleObj extends Phaser.GameObjects.Sprite {
+  constructor(scene: Phaser.Scene) {
+    super(scene, 700, 200, imageKey);
+    this.scene.add.existing(this);
+  }
 
-  preload(scene: Phaser.Scene) {
-    scene.load.image({
+  preload() {
+    console.log('preload', this);
+    this.scene.load.image({
       key: imageKey,
       url: cubicleUrl,
       normalMap: cubicleNormalMapUrl,
     });
   }
 
-  create(scene: Phaser.Scene) {
-    const image = scene.add.image(700, 200, imageKey);
-    this.sprite = image;
-    this.pulse(scene, image);
+  create() {
+    // We must setTexture because we construct the image before
+    // the texture is loaded.
+    this.setTexture(imageKey);
 
-    this.sprite.setDepth(100);
+    this.pulse();
+
+    this.setDepth(2);
 
     // Lights cause the wrong textures to show up when I use setDepth
     // and I don't see a workaround. Disabling for now.
     // this.sprite.setPipeline('Light2D');
     // this.sprite.setPipeline('SinglePipeline');
-    // const light = scene.lights.addLight(0, 0, 200);
-    // scene.lights.enable().setAmbientColor(0x999999);
-    // scene.input.on('pointermove', function (pointer: Phaser.Input.Pointer) {
+    // const light = this.scene.lights.addLight(0, 0, 200);
+    // this.scene.lights.enable().setAmbientColor(0x999999);
+    // this.scene.input.on('pointermove', function (pointer: Phaser.Input.Pointer) {
     //   light.x = pointer.x;
     //   light.y = pointer.y;
     // });
 
   }
 
-  async pulse(scene: Phaser.Scene, image: Phaser.GameObjects.Image) {
-    await tweenPromise(scene, {
-      targets: image,
+  async pulse() {
+    await tweenPromise(this.scene, {
+      targets: this,
       scale: 1.5,
       duration: 300,
     });
-    await tweenPromise(scene, {
-      targets: image,
+    await tweenPromise(this.scene, {
+      targets: this,
       scale: 1.0,
       duration: 300,
     });
-    await tweenPromise(scene, {
-      targets: image,
+    await tweenPromise(this.scene, {
+      targets: this,
       scale: 1.5,
       duration: 500,
     });
-    await tweenPromise(scene, {
-      targets: image,
+    await tweenPromise(this.scene, {
+      targets: this,
       scale: 1.0,
       duration: 100,
     });

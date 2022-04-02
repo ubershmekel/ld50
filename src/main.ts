@@ -2,6 +2,7 @@ import './style.css';
 import 'phaser';
 import { SceneMenu } from './scene-menu';
 import { SceneBattle } from './scene-battle';
+import { gameHeight, gameWidth } from './config';
 
 // const app = document.querySelector<HTMLDivElement>('#app')!;
 // app.innerHTML = `
@@ -14,8 +15,8 @@ const GameConfig: Phaser.Types.Core.GameConfig = {
   title: 'ExampleGame',
   url: 'https://github.com/digitsensitive/phaser3-typescript',
   version: '2.0',
-  width: 1280,
-  height: 720,
+  width: gameWidth,
+  height: gameHeight,
   type: Phaser.AUTO,
   parent: 'app',
   scene: [
