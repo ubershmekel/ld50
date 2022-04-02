@@ -7,12 +7,11 @@ const imageKey = 'cubicle';
 export class CubicleObj extends Phaser.GameObjects.Sprite {
   constructor(scene: Phaser.Scene) {
     super(scene, 700, 200, imageKey);
-    this.scene.add.existing(this);
   }
 
-  preload() {
+  static preload(scene: Phaser.Scene) {
     console.log('preload', this);
-    this.scene.load.image({
+    scene.load.image({
       key: imageKey,
       url: cubicleUrl,
       normalMap: cubicleNormalMapUrl,
@@ -20,9 +19,13 @@ export class CubicleObj extends Phaser.GameObjects.Sprite {
   }
 
   create() {
-    // We must setTexture because we construct the image before
-    // the texture is loaded.
-    this.setTexture(imageKey);
+    this.scene.add.existing(this);
+
+    // Earlier, I was constructing this image in the `scene.preload`
+    // But that caused the cubicle to look like a green debug box.
+    // I used setTexture to fix this. But it still looked like a green
+    // box for a bit unless I refactored `preload` to run as a static method.
+    // this.setTexture(imageKey);
 
     this.pulse();
 

@@ -5,8 +5,11 @@ import { cardsList } from './card-data';
 import { sampleSome, tweenPromise } from './utils';
 import { gameHeight, gameWidth } from './config';
 import { BarObj } from './obj-bar';
+import { MusicObj } from './obj-music';
 
 export class SceneBattle extends Phaser.Scene {
+  music!: MusicObj;
+
   cards: CardObj[] = [];
   cubicle!: CubicleObj;
   activeCard?: CardObj = undefined;
@@ -23,6 +26,9 @@ export class SceneBattle extends Phaser.Scene {
   }
 
   preload(): void {
+    this.music = new MusicObj(this);
+    this.music.preload();
+
     const randomCards = sampleSome(cardsList, 4);
     randomCards.map((cardData, index) => {
       const homePoint = new Phaser.Math.Vector2(300 + index * 180, 580);
@@ -32,10 +38,7 @@ export class SceneBattle extends Phaser.Scene {
     });
     this.cards.map((card) => card.preload());
 
-    this.cubicle = new CubicleObj(this);
-    this.cubicle.x = gameWidth * 0.3;
-    this.cubicle.preload();
-
+    CubicleObj.preload(this);
 
     this.mentalHealthBar = new BarObj(this, {
       width: gameWidth * 0.04,
@@ -69,6 +72,8 @@ export class SceneBattle extends Phaser.Scene {
   };
 
   create(): void {
+    this.music.create();
+
     const cardsGroup = this.physics.add.group();
 
     this.cards.map((card) => {
@@ -80,6 +85,8 @@ export class SceneBattle extends Phaser.Scene {
       fontFamily: "Helvetica",
     });
 
+    this.cubicle = new CubicleObj(this);
+    this.cubicle.x = gameWidth * 0.3;
     this.cubicle.create();
 
     // const physicsCubicle = this.physics.add.existing(this.cubicle);
