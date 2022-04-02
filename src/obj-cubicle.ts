@@ -20,14 +20,18 @@ export class CubicleObj {
     this.sprite = image;
     this.pulse(scene, image);
 
-    this.sprite.setPipeline('Light2D');
-    const light = scene.lights.addLight(0, 0, 200);
-    scene.lights.enable().setAmbientColor(0x999999);
+    this.sprite.setDepth(100);
 
-    scene.input.on('pointermove', function (pointer: Phaser.Input.Pointer) {
-      light.x = pointer.x;
-      light.y = pointer.y;
-    });
+    // Lights cause the wrong textures to show up when I use setDepth
+    // and I don't see a workaround. Disabling for now.
+    // this.sprite.setPipeline('Light2D');
+    // this.sprite.setPipeline('SinglePipeline');
+    // const light = scene.lights.addLight(0, 0, 200);
+    // scene.lights.enable().setAmbientColor(0x999999);
+    // scene.input.on('pointermove', function (pointer: Phaser.Input.Pointer) {
+    //   light.x = pointer.x;
+    //   light.y = pointer.y;
+    // });
 
   }
 

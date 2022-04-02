@@ -29,7 +29,6 @@ export class SceneBattle extends Phaser.Scene {
   }
 
   create(): void {
-    this.cubicle.create(this);
 
     this.cards.map((card) => card.create());
     this.add.text(0, 0, 'Project Progress', {
@@ -37,6 +36,7 @@ export class SceneBattle extends Phaser.Scene {
       fontFamily: "Helvetica",
     });
 
+    this.cubicle.create(this);
 
     // this.physics.add.overlap(this.cubicle, healthGroup, spriteHitHealth);
 
@@ -44,7 +44,6 @@ export class SceneBattle extends Phaser.Scene {
       console.log("dragend", gameObject);
       // gameObject.scale = 1.0;
       (gameObject as any as CardObj).tweenHome();
-      gameObject.setDepth(0);
     });
   }
 

@@ -42,6 +42,7 @@ export class CardObj extends Phaser.GameObjects.Container {
     this.add(effectsText);
 
     this.setSize(sprite.width, sprite.height);
+    this.setDepth(-2);
     this.setInteractive();
     this.scene.input.setDraggable(this);
     // this.scene.input.on('drag', (_pointer: Phaser.Input.Pointer, gameObject: Phaser.GameObjects.Sprite, dragX: number, dragY: number) => {
@@ -58,7 +59,7 @@ export class CardObj extends Phaser.GameObjects.Container {
 
       // UNCOMMENT THIS setDepth TO SEE A STRANGE TEXTURE ISSUE WHEN YOU DRAG CARDS
       // COMMENT IT OUT AND EVERYTHING SEEMS TO BE FINE.
-      this.setDepth(1);
+      this.setDepth(2);
 
       tweenPromise(this.scene, {
         targets: this,
@@ -94,6 +95,7 @@ export class CardObj extends Phaser.GameObjects.Container {
       scale: 1.0,
       duration: 300,
     });
+    this.setDepth(0);
   };
 }
 
