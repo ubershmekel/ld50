@@ -91,7 +91,7 @@ export class CardObj extends Phaser.GameObjects.Container {
 
 
   tweenHome() {
-    console.log("tweenhome", this, this.card.title);
+    // console.log("tweenhome", this, this.card.title);
     tweenPromise(this.scene, {
       targets: this,
       x: this.homePoint.x,

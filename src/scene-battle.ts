@@ -4,11 +4,17 @@ import { CubicleObj } from './obj-cubicle';
 import { cardsList } from './card-data';
 import { sampleSome, tweenPromise } from './utils';
 import { gameHeight, gameWidth } from './config';
+import { BarObj } from './obj-bar';
 
 export class SceneBattle extends Phaser.Scene {
   cards: CardObj[] = [];
   cubicle!: CubicleObj;
   activeCard?: CardObj = undefined;
+
+  mentalHealthBar!: BarObj;
+  managerBar!: BarObj;
+  friendBar!: BarObj;
+  moneyBar!: BarObj;
 
   constructor() {
     super({
@@ -27,7 +33,39 @@ export class SceneBattle extends Phaser.Scene {
     this.cards.map((card) => card.preload());
 
     this.cubicle = new CubicleObj(this);
+    this.cubicle.x = gameWidth * 0.3;
     this.cubicle.preload();
+
+
+    this.mentalHealthBar = new BarObj(this, {
+      width: gameWidth * 0.04,
+      height: gameHeight * 0.4,
+      value: 3,
+      valueMax: 20,
+      outlinePx: 4,
+      outlineColor: 0x0774e7,
+      backgroundColor: 0x111111,
+      fillColor: 0xaaaa22,
+      isVertical: true,
+    });
+
+    this.mentalHealthBar.x = gameWidth * 0.8;
+    this.mentalHealthBar.y = 100;
+
+    this.moneyBar = new BarObj(this, {
+      width: gameWidth * 0.04,
+      height: gameHeight * 0.4,
+      value: 15,
+      valueMax: 20,
+      outlinePx: 4,
+      outlineColor: 0x0774e7,
+      backgroundColor: 0x111111,
+      fillColor: 0x31a952,
+      isVertical: true,
+    });
+
+    this.moneyBar.x = gameWidth * 0.85;
+    this.moneyBar.y = 100;
   };
 
   create(): void {
@@ -64,18 +102,22 @@ export class SceneBattle extends Phaser.Scene {
     this.cubicle.setTint(0x888888);
   };
 
-  activateCard() {
+  async activateCard() {
     if (!this.activeCard) {
       throw new Error("Activated a card when no card was active");
     }
     this.activeCard.setDepth(10);
-    tweenPromise(this, {
+
+    await tweenPromise(this, {
       targets: this.activeCard,
       x: gameWidth / 2,
       y: gameHeight / 2,
       scale: 1.0,
+      angle: 360,
       duration: 500,
     });
+
+    this.moneyBar.setValue(Math.random() * 15);
   }
 
   update(): void {
@@ -96,7 +138,7 @@ export class SceneBattle extends Phaser.Scene {
 }
 
 function checkOverlap(spriteA: Phaser.GameObjects.Sprite, spriteB: Phaser.GameObjects.Sprite) {
-  console.log('bounds', spriteA, spriteB);
+  // console.log('bounds', spriteA, spriteB);
   var boundsA = spriteA.getBounds();
   var boundsB = spriteB.getBounds();
   return Phaser.Geom.Intersects.RectangleToRectangle(boundsA, boundsB);
