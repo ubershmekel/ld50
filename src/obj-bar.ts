@@ -69,6 +69,12 @@ export class BarObj extends Phaser.GameObjects.Graphics {
 
   setValue = (value: number) => {
     this.info.value = value;
+    if (this.info.value > this.info.valueMax) {
+      this.info.value = this.info.valueMax;
+    }
+    if (this.info.value < 0) {
+      this.info.value = 0;
+    }
     this.draw();
   };
 

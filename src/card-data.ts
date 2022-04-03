@@ -22,20 +22,19 @@ export const cardsList: CardData[] = [
   {
     title: "Take the boss to the gun range",
     mgr: 5,
-    money: -6,
+    money: -3,
   },
   {
     title: "Outsource work",
-    money: -6,
-    // prog: 3,
+    money: -3,
     mgr: -1,
+    time: 1,
   },
   {
     title: "Throw a party",
-    // desc: "2x friend sentiment, -10 money",
-    money: -10,
+    money: -3,
     fr: 5,
-    // TODO: 2x friend sent
+    mh: 1,
   },
   {
     title: "Say something 'smart' at the meeting",
@@ -44,18 +43,19 @@ export const cardsList: CardData[] = [
   },
   {
     title: "Have a baby",
-    time: 9,
-    mh: -3,
+    time: 2,
+    mh: -1,
+    money: -5,
   },
   {
     title: "Ask a friend how to do it",
-    // prog: 3,
-    fr: -1,
+    fr: -2,
+    mgr: 1,
   },
   {
     title: "Try to do the work",
-    // prog: 1,
     mh: -1,
+    fr: 1,
   },
   {
     title: "Apply for a promotion",
@@ -65,7 +65,11 @@ export const cardsList: CardData[] = [
   {
     title: "Learn a few buzzwords",
     mgr: 1,
-    // prog: 1,
-    time: 1,
+    mh: -1,
+  },
+  {
+    title: "Add documentation",
+    fr: 1,
+    mh: -1,
   },
 ];

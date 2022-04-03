@@ -62,6 +62,7 @@ export class SceneBattle extends Phaser.Scene {
     this.dealFromDeck();
     const timeLeft = this.timeBar.getValue() - 1;
     this.timeBar.setValue(timeLeft);
+    this.moneyBar.setValue(this.moneyBar.getValue() + 1);
   }
 
   dealFromDeck() {
@@ -170,7 +171,7 @@ export class SceneBattle extends Phaser.Scene {
   };
 
   preloadBars() {
-    const defaultBarValue = 8;
+    const defaultBarValue = 10;
 
     this.mentalHealthBar = new BarObj(this, {
       width: gameWidth * 0.04,
@@ -184,9 +185,6 @@ export class SceneBattle extends Phaser.Scene {
       isVertical: true,
     });
 
-    this.mentalHealthBar.x = gameWidth * 0.7;
-    this.mentalHealthBar.y = 100;
-
     this.moneyBar = new BarObj(this, {
       width: gameWidth * 0.04,
       height: gameHeight * 0.4,
@@ -198,9 +196,6 @@ export class SceneBattle extends Phaser.Scene {
       fillColor: 0x31a952,
       isVertical: true,
     });
-
-    this.moneyBar.x = gameWidth * 0.75;
-    this.moneyBar.y = 100;
 
     this.friendBar = new BarObj(this, {
       width: gameWidth * 0.04,
@@ -214,9 +209,6 @@ export class SceneBattle extends Phaser.Scene {
       isVertical: true,
     });
 
-    this.friendBar.x = gameWidth * 0.8;
-    this.friendBar.y = 100;
-
     this.managerBar = new BarObj(this, {
       width: gameWidth * 0.04,
       height: gameHeight * 0.4,
@@ -228,10 +220,6 @@ export class SceneBattle extends Phaser.Scene {
       fillColor: 0xea4131,
       isVertical: true,
     });
-
-    this.managerBar.x = gameWidth * 0.85;
-    this.managerBar.y = 100;
-
 
     this.timeBar = new BarObj(this, {
       width: gameWidth * 0.04,
@@ -245,8 +233,18 @@ export class SceneBattle extends Phaser.Scene {
       isVertical: true,
     });
 
-    this.timeBar.x = gameWidth * 0.9;
-    this.timeBar.y = 100;
+    const bars = [
+      this.mentalHealthBar,
+      this.friendBar,
+      this.managerBar,
+      this.moneyBar,
+      this.timeBar,
+    ];
+
+    for (let i = 0; i < bars.length; i++) {
+      bars[i].x = gameWidth * (0.7 + i * 0.05);
+      bars[i].y = 100;
+    }
   }
 }
 
