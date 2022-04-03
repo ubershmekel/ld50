@@ -3,6 +3,7 @@ import 'phaser';
 import { SceneMenu } from './scene-menu';
 import { SceneBattle } from './scene-battle';
 import { gameHeight, gameWidth } from './config';
+import { SceneLose } from './scene-lose';
 
 // const app = document.querySelector<HTMLDivElement>('#app')!;
 // app.innerHTML = `
@@ -20,6 +21,7 @@ const GameConfig: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
   parent: 'app',
   scene: [
+    SceneLose,
     SceneBattle,
     SceneMenu,
   ],

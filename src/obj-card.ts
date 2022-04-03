@@ -1,7 +1,7 @@
 import BBCodeText from 'phaser3-rex-plugins/plugins/bbcodetext.js';
 import gunRangeUrl from '../assets/gun-range.png';
 import cardbackUrl from '../assets/cardback.png';
-import { CardData, codeToColor, resourceKeys } from './card-data';
+import { CardData, codeToColor, codeToResourceName, resourceKeys } from './card-data';
 import { tweenPromise } from './utils';
 
 const imageKey = 'card-back';
@@ -112,15 +112,6 @@ export class CardObj extends Phaser.GameObjects.Container {
 
 
 function effectTextFromCard(card: CardData) {
-  const names: {
-    [key in keyof Partial<CardData>]: string;
-  } = {
-    mh: "Mental health",
-    mgr: "Manager sentiment",
-    fr: "Friends sentiment",
-    money: "Money",
-    time: "Time to performance review",
-  };
   const parts = [];
   for (const key of resourceKeys) {
     const val = card[key as keyof CardData] as number;
@@ -132,7 +123,7 @@ function effectTextFromCard(card: CardData) {
       valText = '+' + valText;
     }
     const color = codeToColor[key] as number;
-    const text = `${names[key]} [color=#${color.toString(16)}]${valText}[/color]`;
+    const text = `${codeToResourceName(key)} [color=#${color.toString(16)}]${valText}[/color]`;
     parts.push(text);
   }
   return parts.join(', ');

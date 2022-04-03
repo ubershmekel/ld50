@@ -8,6 +8,9 @@ import { BarObj } from './obj-bar';
 import { MusicObj } from './obj-music';
 import { ButtonObj } from './obj-button';
 import { SparklerObj } from './obj-sparkler';
+import { SceneLoseKey, SceneLoseProps } from './scene-lose';
+
+export const SceneBattleKey = 'SceneBattle';
 
 export class SceneBattle extends Phaser.Scene {
   music!: MusicObj;
@@ -25,10 +28,18 @@ export class SceneBattle extends Phaser.Scene {
   endTurnButton!: ButtonObj;
 
   sparkler!: SparklerObj;
+  turnsAlive = 0;
+  keyToBar = {
+    mh: this.mentalHealthBar,
+    mgr: this.managerBar,
+    fr: this.friendBar,
+    money: this.moneyBar,
+    time: this.timeBar,
+  };
 
   constructor() {
     super({
-      key: 'SceneBattle'
+      key: SceneBattleKey,
     });
   }
 
@@ -68,6 +79,9 @@ export class SceneBattle extends Phaser.Scene {
     const timeLeft = this.timeBar.getValue() - 1;
     this.timeBar.setValue(timeLeft);
     this.moneyBar.setValue(this.moneyBar.getValue() + 1);
+    this.checkWhetherToEndBattle();
+
+    this.turnsAlive += 1;
   }
 
   dealFromDeck() {
@@ -87,6 +101,7 @@ export class SceneBattle extends Phaser.Scene {
   }
 
   create(): void {
+    this.turnsAlive = 0;
     this.music.create();
 
     // const cardsGroup = this.physics.add.group();
@@ -128,22 +143,17 @@ export class SceneBattle extends Phaser.Scene {
     }
     this.activeCard.setDepth(10);
 
-    const keyToBar = {
-      mh: this.mentalHealthBar,
-      mgr: this.managerBar,
-      fr: this.friendBar,
-      money: this.moneyBar,
-      time: this.timeBar,
-    };
     // this.moneyBar.setValue(Math.random() * 15);
     for (const key of resourceKeys) {
       const valueChange = this.activeCard.card[key as keyof CardData] as number | undefined;
       if (!valueChange) {
         continue;
       }
-      const bar = keyToBar[key as keyof typeof keyToBar];
+      const bar = this.keyToBar[key as keyof typeof this.keyToBar];
       bar.setValue(bar.getValue() + valueChange);
     }
+
+    this.checkWhetherToEndBattle();
 
     await tweenPromise(this, {
       targets: this.activeCard,
@@ -157,7 +167,23 @@ export class SceneBattle extends Phaser.Scene {
 
   }
 
-  update(): void {
+  checkWhetherToEndBattle() {
+    for (const key of resourceKeys) {
+      const bar = this.keyToBar[key as keyof typeof this.keyToBar];
+
+      if (bar.getValue() <= 0) {
+        this.endBattle(key);
+      }
+    }
+  }
+
+  endBattle(resourceKey: string) {
+    console.log("endbattle");
+    const sceneProps: SceneLoseProps = {
+      reason: resourceKey,
+      score: this.turnsAlive,
+    };
+    this.scene.start(SceneLoseKey, sceneProps);
   }
 
   onDragCard = (card: CardObj) => {
@@ -238,6 +264,14 @@ export class SceneBattle extends Phaser.Scene {
       fillColor: codeToColor.time,
       isVertical: true,
     });
+
+    this.keyToBar = {
+      mh: this.mentalHealthBar,
+      mgr: this.managerBar,
+      fr: this.friendBar,
+      money: this.moneyBar,
+      time: this.timeBar,
+    };
 
     const bars = [
       this.mentalHealthBar,

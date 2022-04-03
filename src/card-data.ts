@@ -27,6 +27,20 @@ export const codeToColor = {
   time: 0x747474,
 };
 
+export function codeToResourceName(code: ResourceKeysType) {
+  const names: {
+    [key in keyof Partial<CardData>]: string;
+  } = {
+    mh: "Mental health",
+    mgr: "Manager sentiment",
+    fr: "Friends sentiment",
+    money: "Money",
+    time: "Time to performance review",
+  };
+
+  return names[code];
+}
+
 export const cardsList: CardData[] = [
   {
     title: "Take the boss to the gun range",

@@ -56,14 +56,14 @@ export class ButtonObj extends Phaser.GameObjects.Container {
     // this.setInteractive();
     this.rect.setInteractive();
     this.rect.on('pointerover', () => {
-      console.log('pointerover');
+      // console.log('pointerover');
       this.bgColor = this.info.pointerOverColor;
       this.alpha = 1.0;
       this.draw();
     });
 
     this.rect.on('pointerup', () => {
-      console.log('pointerup');
+      // console.log('pointerup');
       this.bgColor = this.info.pointerUpColor;
       this.alpha = 1.0;
       this.draw();
@@ -71,14 +71,14 @@ export class ButtonObj extends Phaser.GameObjects.Container {
     });
 
     this.rect.on('pointerout', () => {
-      console.log('pointerout');
+      // console.log('pointerout');
       this.bgColor = this.info.pointerOutColor;
       this.alpha = 1.0;
       this.draw();
     });
 
     this.rect.on('pointerdown', () => {
-      console.log('pointerdown');
+      // console.log('pointerdown');
       this.alpha = 0.7;
       this.bgColor = this.info.pointerDownColor;
       this.draw();
