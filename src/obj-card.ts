@@ -1,6 +1,6 @@
 import gunRangeUrl from '../assets/gun-range.png';
 import cardbackUrl from '../assets/cardback.png';
-import type { CardData } from './card-data';
+import { CardData, resourceKeys } from './card-data';
 import { tweenPromise } from './utils';
 
 const imageKey = 'card-back';
@@ -114,8 +114,7 @@ function effectTextFromCard(card: CardData) {
   //   time?: number;
   // }
   const parts = [];
-  const valKeys = ['mh', 'mgr', 'fr', 'money', 'prog', 'time'];
-  for (const key of valKeys) {
+  for (const key of resourceKeys) {
     const val = card[key as keyof CardData] as number;
     if (!val) {
       continue;

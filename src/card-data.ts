@@ -6,13 +6,15 @@
   * OKR Progress - prog
 */
 
+export const resourceKeys = ['mh', 'mgr', 'fr', 'money', 'time'];
+
 export interface CardData {
   title: string;
   mh?: number;
   mgr?: number;
   fr?: number;
   money?: number;
-  prog?: number;
+  // prog?: number;
   time?: number;
 }
 
@@ -25,7 +27,7 @@ export const cardsList: CardData[] = [
   {
     title: "Outsource work",
     money: -6,
-    prog: 3,
+    // prog: 3,
     mgr: -1,
   },
   {
@@ -47,12 +49,12 @@ export const cardsList: CardData[] = [
   },
   {
     title: "Ask a friend how to do it",
-    prog: 3,
+    // prog: 3,
     fr: -1,
   },
   {
     title: "Try to do the work",
-    prog: 1,
+    // prog: 1,
     mh: -1,
   },
   {
@@ -63,7 +65,7 @@ export const cardsList: CardData[] = [
   {
     title: "Learn a few buzzwords",
     mgr: 1,
-    prog: 1,
+    // prog: 1,
     time: 1,
   },
 ];

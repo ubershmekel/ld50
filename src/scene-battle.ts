@@ -1,7 +1,7 @@
 import 'phaser';
 import { CardObj } from './obj-card';
 import { CubicleObj } from './obj-cubicle';
-import { cardsList } from './card-data';
+import { CardData, cardsList, resourceKeys } from './card-data';
 import { sampleSome, tweenPromise } from './utils';
 import { gameHeight, gameWidth } from './config';
 import { BarObj } from './obj-bar';
@@ -18,6 +18,7 @@ export class SceneBattle extends Phaser.Scene {
   managerBar!: BarObj;
   friendBar!: BarObj;
   moneyBar!: BarObj;
+  timeBar!: BarObj;
 
   constructor() {
     super({
@@ -40,35 +41,7 @@ export class SceneBattle extends Phaser.Scene {
 
     CubicleObj.preload(this);
 
-    this.mentalHealthBar = new BarObj(this, {
-      width: gameWidth * 0.04,
-      height: gameHeight * 0.4,
-      value: 3,
-      valueMax: 20,
-      outlinePx: 4,
-      outlineColor: 0x0774e7,
-      backgroundColor: 0x111111,
-      fillColor: 0xaaaa22,
-      isVertical: true,
-    });
-
-    this.mentalHealthBar.x = gameWidth * 0.8;
-    this.mentalHealthBar.y = 100;
-
-    this.moneyBar = new BarObj(this, {
-      width: gameWidth * 0.04,
-      height: gameHeight * 0.4,
-      value: 15,
-      valueMax: 20,
-      outlinePx: 4,
-      outlineColor: 0x0774e7,
-      backgroundColor: 0x111111,
-      fillColor: 0x31a952,
-      isVertical: true,
-    });
-
-    this.moneyBar.x = gameWidth * 0.85;
-    this.moneyBar.y = 100;
+    this.preloadBars();
   };
 
   create(): void {
@@ -115,16 +88,33 @@ export class SceneBattle extends Phaser.Scene {
     }
     this.activeCard.setDepth(10);
 
+    const keyToBar = {
+      mh: this.mentalHealthBar,
+      mgr: this.managerBar,
+      fr: this.friendBar,
+      money: this.moneyBar,
+      time: this.timeBar,
+    };
+    // this.moneyBar.setValue(Math.random() * 15);
+    for (const key of resourceKeys) {
+      const value = this.activeCard.card[key as keyof CardData] as number | undefined;
+      if (!value) {
+        continue;
+      }
+      const bar = keyToBar[key as keyof typeof keyToBar];
+      bar.setValue(bar.info.value + value);
+    }
+
     await tweenPromise(this, {
       targets: this.activeCard,
       x: gameWidth / 2,
       y: gameHeight / 2,
       scale: 1.0,
-      angle: 360,
+      angle: 360 - 720 * Math.random(),
       duration: 500,
+      alpha: 0,
     });
 
-    this.moneyBar.setValue(Math.random() * 15);
   }
 
   update(): void {
@@ -142,6 +132,85 @@ export class SceneBattle extends Phaser.Scene {
     }
   };
 
+  preloadBars() {
+    const defaultBarValue = 8;
+
+    this.mentalHealthBar = new BarObj(this, {
+      width: gameWidth * 0.04,
+      height: gameHeight * 0.4,
+      value: defaultBarValue,
+      valueMax: 20,
+      outlinePx: 4,
+      outlineColor: 0x0774e7,
+      backgroundColor: 0x111111,
+      fillColor: 0xaaaa22,
+      isVertical: true,
+    });
+
+    this.mentalHealthBar.x = gameWidth * 0.7;
+    this.mentalHealthBar.y = 100;
+
+    this.moneyBar = new BarObj(this, {
+      width: gameWidth * 0.04,
+      height: gameHeight * 0.4,
+      value: defaultBarValue,
+      valueMax: 20,
+      outlinePx: 4,
+      outlineColor: 0x0774e7,
+      backgroundColor: 0x111111,
+      fillColor: 0x31a952,
+      isVertical: true,
+    });
+
+    this.moneyBar.x = gameWidth * 0.75;
+    this.moneyBar.y = 100;
+
+    this.friendBar = new BarObj(this, {
+      width: gameWidth * 0.04,
+      height: gameHeight * 0.4,
+      value: defaultBarValue,
+      valueMax: 20,
+      outlinePx: 4,
+      outlineColor: 0x0774e7,
+      backgroundColor: 0x111111,
+      fillColor: 0x3f86f4,
+      isVertical: true,
+    });
+
+    this.friendBar.x = gameWidth * 0.8;
+    this.friendBar.y = 100;
+
+    this.managerBar = new BarObj(this, {
+      width: gameWidth * 0.04,
+      height: gameHeight * 0.4,
+      value: defaultBarValue,
+      valueMax: 20,
+      outlinePx: 4,
+      outlineColor: 0x0774e7,
+      backgroundColor: 0x111111,
+      fillColor: 0xea4131,
+      isVertical: true,
+    });
+
+    this.managerBar.x = gameWidth * 0.85;
+    this.managerBar.y = 100;
+
+
+    this.timeBar = new BarObj(this, {
+      width: gameWidth * 0.04,
+      height: gameHeight * 0.4,
+      value: defaultBarValue,
+      valueMax: 20,
+      outlinePx: 4,
+      outlineColor: 0x0774e7,
+      backgroundColor: 0x111111,
+      fillColor: 0x747474,
+      isVertical: true,
+    });
+
+    this.timeBar.x = gameWidth * 0.9;
+    this.timeBar.y = 100;
+  }
 }
 
 function checkOverlap(spriteA: Phaser.GameObjects.Sprite, spriteB: Phaser.GameObjects.Sprite) {
