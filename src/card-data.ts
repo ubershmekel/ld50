@@ -6,7 +6,8 @@
   * OKR Progress - prog
 */
 
-export const resourceKeys = ['mh', 'mgr', 'fr', 'money', 'time'];
+export type ResourceKeysType = keyof Partial<CardData>;
+export const resourceKeys: ResourceKeysType[] = ['mh', 'mgr', 'fr', 'money', 'time'];
 
 export interface CardData {
   title: string;

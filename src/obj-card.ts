@@ -106,14 +106,15 @@ export class CardObj extends Phaser.GameObjects.Container {
 
 
 function effectTextFromCard(card: CardData) {
-  // const values = {
-  //   mh?: number;
-  //   mgr?: number;
-  //   fr?: number;
-  //   money?: number;
-  //   prog?: number;
-  //   time?: number;
-  // }
+  const names: {
+    [key in keyof Partial<CardData>]: string;
+  } = {
+    mh: "Mental health",
+    mgr: "Manager sentiment",
+    fr: "Friends sentiment",
+    money: "Money",
+    time: "Time to performance review",
+  };
   const parts = [];
   for (const key of resourceKeys) {
     const val = card[key as keyof CardData] as number;
@@ -124,7 +125,7 @@ function effectTextFromCard(card: CardData) {
     if (val > 0) {
       valText = '+' + valText;
     }
-    const text = `${key} ${valText}`;
+    const text = `${names[key]} ${valText}`;
     parts.push(text);
   }
   return parts.join(', ');
