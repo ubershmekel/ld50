@@ -1,3 +1,4 @@
+import { tweenPromise } from "./utils";
 
 export interface ButtonInfo {
   width: number;
@@ -119,5 +120,16 @@ export class ButtonObj extends Phaser.GameObjects.Container {
     this.textObj.setText(text);
     this.draw();
   };
+
+  pulse() {
+    return tweenPromise(this.scene, {
+      targets: this,
+      scale: 1.5,
+      angle: 20,
+      duration: 300,
+      yoyo: true,
+      ease: 'cubic',
+    });
+  }
 
 }

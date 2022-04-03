@@ -35,8 +35,8 @@ https://twitter.com/ubershmekel
 
 * ✅Add icons to resource meters
 * ✅Add weeks survived counter
-* Splash screen art
-* Add explanations to splash screen
+* ✅Splash screen art
+* ✅Add explanations to splash screen
 * Add sounds to cards
 * Add more cards
 * Maybe maybe make a card meta game

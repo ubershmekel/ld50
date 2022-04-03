@@ -14,6 +14,9 @@ import { isInFullScreen, requestFullScreen } from './full-screener';
 export const SceneBattleKey = 'SceneBattle';
 
 export class SceneBattle extends Phaser.Scene {
+  turnsAlive = 0;
+  cardsUsedThisTurn = 0;
+
   music!: MusicObj;
   topText!: Phaser.GameObjects.Text;
 
@@ -30,7 +33,6 @@ export class SceneBattle extends Phaser.Scene {
   endTurnButton!: ButtonObj;
 
   sparkler!: SparklerObj;
-  turnsAlive = 0;
   keyToBar = {
     mh: this.mentalHealthBar,
     mgr: this.managerBar,
@@ -77,6 +79,10 @@ export class SceneBattle extends Phaser.Scene {
   };
 
   endTurn() {
+    if (this.cardsUsedThisTurn === 0) {
+      this.mentalHealthBar.setValue(this.mentalHealthBar.getValue() - 2);
+    }
+
     this.dealFromDeck();
     const timeLeft = this.timeBar.getValue() - 1;
     this.timeBar.setValue(timeLeft);
@@ -88,6 +94,7 @@ export class SceneBattle extends Phaser.Scene {
   }
 
   dealFromDeck() {
+    this.cardsUsedThisTurn = 0;
     this.cards.map((card) => {
       card.destroy();
     });
@@ -149,6 +156,7 @@ export class SceneBattle extends Phaser.Scene {
       throw new Error("Activated a card when no card was active");
     }
     this.activeCard.setDepth(10);
+    this.cardsUsedThisTurn += 1;
 
     // this.moneyBar.setValue(Math.random() * 15);
     for (const key of resourceKeys) {
@@ -161,6 +169,10 @@ export class SceneBattle extends Phaser.Scene {
     }
 
     this.checkWhetherToEndBattle();
+
+    if (this.cardsUsedThisTurn === this.cards.length) {
+      this.endTurnButton.pulse();
+    }
 
     await tweenPromise(this, {
       targets: this.activeCard,

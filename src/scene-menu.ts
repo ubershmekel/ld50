@@ -59,6 +59,7 @@ export class SceneMenu extends Phaser.Scene {
       splashImage.alpha = 1;
       welcomeImage.alpha = 0;
       startButton.alpha = 1;
+      startButton.pulse();
     });
 
 
