@@ -6,7 +6,7 @@
   * OKR Progress - prog
 */
 
-export type ResourceKeysType = keyof Partial<CardData>;
+export type ResourceKeysType = 'mh' | 'mgr' | 'fr' | 'money' | 'time';
 export const resourceKeys: ResourceKeysType[] = ['mh', 'mgr', 'fr', 'money', 'time'];
 
 export interface CardData {
@@ -18,6 +18,14 @@ export interface CardData {
   // prog?: number;
   time?: number;
 }
+
+export const codeToColor = {
+  mh: 0xaaaa22,
+  money: 0x31a952,
+  fr: 0x3f86f4,
+  mgr: 0xea4131,
+  time: 0x747474,
+};
 
 export const cardsList: CardData[] = [
   {

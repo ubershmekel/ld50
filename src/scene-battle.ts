@@ -1,7 +1,7 @@
 import 'phaser';
 import { CardObj } from './obj-card';
 import { CubicleObj } from './obj-cubicle';
-import { CardData, cardsList, resourceKeys } from './card-data';
+import { CardData, cardsList, codeToColor, resourceKeys } from './card-data';
 import { sampleSome, tweenPromise } from './utils';
 import { gameHeight, gameWidth } from './config';
 import { BarObj } from './obj-bar';
@@ -187,7 +187,7 @@ export class SceneBattle extends Phaser.Scene {
       outlinePx: 4,
       outlineColor: 0x0774e7,
       backgroundColor: 0x111111,
-      fillColor: 0xaaaa22,
+      fillColor: codeToColor.mh,
       isVertical: true,
     });
 
@@ -199,7 +199,7 @@ export class SceneBattle extends Phaser.Scene {
       outlinePx: 4,
       outlineColor: 0x0774e7,
       backgroundColor: 0x111111,
-      fillColor: 0x31a952,
+      fillColor: codeToColor.money,
       isVertical: true,
     });
 
@@ -211,7 +211,7 @@ export class SceneBattle extends Phaser.Scene {
       outlinePx: 4,
       outlineColor: 0x0774e7,
       backgroundColor: 0x111111,
-      fillColor: 0x3f86f4,
+      fillColor: codeToColor.fr,
       isVertical: true,
     });
 
@@ -223,7 +223,7 @@ export class SceneBattle extends Phaser.Scene {
       outlinePx: 4,
       outlineColor: 0x0774e7,
       backgroundColor: 0x111111,
-      fillColor: 0xea4131,
+      fillColor: codeToColor.mgr,
       isVertical: true,
     });
 
@@ -235,7 +235,7 @@ export class SceneBattle extends Phaser.Scene {
       outlinePx: 4,
       outlineColor: 0x0774e7,
       backgroundColor: 0x111111,
-      fillColor: 0x747474,
+      fillColor: codeToColor.time,
       isVertical: true,
     });
 
