@@ -7,6 +7,7 @@ import { gameHeight, gameWidth } from './config';
 import { BarObj } from './obj-bar';
 import { MusicObj } from './obj-music';
 import { ButtonObj } from './obj-button';
+import { SparklerObj } from './obj-sparkler';
 
 export class SceneBattle extends Phaser.Scene {
   music!: MusicObj;
@@ -23,6 +24,8 @@ export class SceneBattle extends Phaser.Scene {
 
   endTurnButton!: ButtonObj;
 
+  sparkler!: SparklerObj;
+
   constructor() {
     super({
       key: 'SceneBattle'
@@ -36,6 +39,8 @@ export class SceneBattle extends Phaser.Scene {
     CardObj.preload(this);
 
     CubicleObj.preload(this);
+
+    SparklerObj.preload(this);
 
     this.preloadBars();
 
@@ -91,7 +96,7 @@ export class SceneBattle extends Phaser.Scene {
     //   card.create();
     //   // cardsGroup.add(card);
     // });
-    this.add.text(0, 0, 'Project Progress', {
+    this.add.text(0, 0, "I don't know how to code", {
       fontSize: '40px',
       fontFamily: "Helvetica",
     });
@@ -100,16 +105,13 @@ export class SceneBattle extends Phaser.Scene {
     this.cubicle.x = gameWidth * 0.3;
     this.cubicle.create();
 
-    // const physicsCubicle = this.physics.add.existing(this.cubicle);
-    // this.physics.add.overlap(physicsCubicle, cardsGroup, () => {
-    //   // console.log("overlap");
-    //   this.cubicle.setTint(0xeeeeee);
-    // });
+    this.sparkler = new SparklerObj(this);
 
     this.input.on('dragend', (_pointer: Phaser.Input.Pointer, gameObject: Phaser.GameObjects.Sprite) => {
       // console.log("dragend", gameObject);
       // gameObject.scale = 1.0;
-      this.cubicle.setTint(0x888888);
+      // this.cubicle.setTint(0x888888);
+      this.sparkler.emitter.stop();
       if (this.activeCard) {
         this.activateCard();
       } else {
@@ -117,7 +119,7 @@ export class SceneBattle extends Phaser.Scene {
       }
     });
 
-    this.cubicle.setTint(0x888888);
+    // this.cubicle.setTint(0x888888);
   };
 
   async activateCard() {
@@ -162,11 +164,15 @@ export class SceneBattle extends Phaser.Scene {
     // `=>` to make sure `this` is what we defined here.
     // console.log('ondragcard', this.cubicle);
     if (checkOverlap(card as any as Phaser.GameObjects.Sprite, this.cubicle as any as Phaser.GameObjects.Sprite)) {
-      this.cubicle.setTint(0xeeeeee);
+      // this.cubicle.setTint(0xeeeeee);
       this.activeCard = card;
+      this.sparkler.emitter.start();
+      this.sparkler.x = this.input.activePointer.x;
+      this.sparkler.y = this.input.activePointer.y;
     } else {
-      this.cubicle.setTint(0x888888);
+      // this.cubicle.setTint(0x888888);
       this.activeCard = undefined;
+      this.sparkler.emitter.stop();
     }
   };
 
