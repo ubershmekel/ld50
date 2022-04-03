@@ -29,19 +29,20 @@ export class CardObj extends Phaser.GameObjects.Container {
     const sprite = this.scene.add.image(0, 0, imageKey);
     this.add(sprite);
 
-    const title = this.scene.add.text(-sprite.width / 2 + paddingPx, -110, this.card.title, {
-      fontSize: '14px',
+    const title = this.scene.add.text(0, -110, this.card.title, {
+      fontSize: '16px',
       fontFamily: "Helvetica",
-      wordWrap: { width: sprite.width - paddingPx },
+      wordWrap: { width: sprite.width - paddingPx, useAdvancedWrap: true },
+      align: 'center',
     });
+    title.setOrigin(0.5, 0);
     this.add(title);
 
     const effectString = effectTextFromCard(this.card);
     // const effectsText = this.scene.add.text(-sprite.width / 2 + paddingPx, 40, effectString, {
     const effectsText = new BBCodeText(this.scene, -sprite.width / 2 + paddingPx, 40, effectString, {
-      fontSize: '14px',
+      fontSize: '16px',
       fontFamily: "Helvetica",
-      // wordWrap: { width: sprite.width - paddingPx },
       wrap: {
         mode: 'word',
         width: sprite.width - paddingPx,
