@@ -100,4 +100,9 @@ export const cardsList: CardData[] = [
     mgr: -3,
     mh: 3,
   },
+  {
+    title: 'Watch a "bit" of TV',
+    mgr: -1,
+    mh: 1,
+  },
 ];

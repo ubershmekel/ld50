@@ -21,9 +21,9 @@ const GameConfig: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
   parent: 'app',
   scene: [
+    SceneMenu,
     SceneBattle,
     SceneLose,
-    SceneMenu,
   ],
   input: {
     keyboard: true
