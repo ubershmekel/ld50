@@ -1,3 +1,9 @@
+import mentalHealthUrl from '../assets/mental-health.png';
+import friendsUrl from '../assets/friends.png';
+import managerUrl from '../assets/manager.png';
+import moneyUrl from '../assets/money.png';
+import timeUrl from '../assets/time.png';
+import { resourceKeys, ResourceKeysType } from './card-data';
 
 export interface BarInfo {
   width: number;
@@ -21,8 +27,24 @@ export class BarObj extends Phaser.GameObjects.Graphics {
     this.draw();
   }
 
-  // preload() {
-  // }
+  static preload(scene: Phaser.Scene) {
+    const resourceToUrl = {
+      mh: mentalHealthUrl,
+      mgr: managerUrl,
+      fr: friendsUrl,
+      money: moneyUrl,
+      time: timeUrl,
+    };
+    for (const resKey of resourceKeys) {
+      const imageKey = this.iconImageKey(resKey);
+      const url = resourceToUrl[resKey];
+      scene.load.image(imageKey, url);
+    }
+  }
+
+  static iconImageKey(resourceKey: ResourceKeysType) {
+    return 'icon-' + resourceKey;
+  }
 
   // create() {
   //   // this.rect = scene.add.rectangle(gameWidth * 0.0, gameHeight * 0.0, gameWidth * 0.03, gameHeight);

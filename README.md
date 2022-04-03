@@ -22,11 +22,21 @@ https://twitter.com/ubershmekel
 
 ## Todos
 
-* Cards UI
-* Card logic engine
-* Resource meters
+* ✅Cards UI
+* ✅Card logic engine
+* ✅Resource meters
 * 30 cards content
 * Card meta-game, choose a card to add to deck after each round
 * Card art
 * Elevator music
 * Hmm, oh, aww, woohoo, sounds like office chatter for some cards.
+
+## Last 6 hours plan
+
+* ✅Add icons to resource meters
+* Add weeks survived counter
+* Splash screen art
+* Add explanations to splash screen
+* Add sounds to cards
+* Add more cards
+* Maybe maybe make a card meta game

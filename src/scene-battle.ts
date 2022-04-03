@@ -54,7 +54,7 @@ export class SceneBattle extends Phaser.Scene {
 
     SparklerObj.preload(this);
 
-    this.preloadBars();
+    BarObj.preload(this);
 
     this.endTurnButton = new ButtonObj(this, {
       width: gameWidth * 0.12,
@@ -102,6 +102,8 @@ export class SceneBattle extends Phaser.Scene {
   }
 
   create(): void {
+    this.createBars();
+
     this.input.on('pointerdown', () => {
       if (!isInFullScreen()) {
         requestFullScreen(document.getElementById("app"));
@@ -210,7 +212,7 @@ export class SceneBattle extends Phaser.Scene {
     }
   };
 
-  preloadBars() {
+  createBars() {
     const defaultBarValue = 10;
 
     this.mentalHealthBar = new BarObj(this, {
@@ -292,6 +294,13 @@ export class SceneBattle extends Phaser.Scene {
     for (let i = 0; i < bars.length; i++) {
       bars[i].x = gameWidth * (0.7 + i * 0.05);
       bars[i].y = 100;
+    }
+
+    for (const resKey of resourceKeys) {
+      const bar = this.keyToBar[resKey];
+      const image = this.add.image(bar.x - 5, bar.y - 70, BarObj.iconImageKey(resKey));
+      image.setOrigin(0);
+      image.setScale(0.8);
     }
   }
 }
