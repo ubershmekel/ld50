@@ -30,13 +30,13 @@ export class SceneLose extends Phaser.Scene {
   }
 
   create(): void {
-    this.add.text(0, 0, `You were fired after ${this.props.score} weeks`, {
+    this.add.text(gameWidth * 0.01, gameHeight * 0.01, `You were fired after ${this.props.score} weeks`, {
       fontSize: '60px',
       fontFamily: "Helvetica",
       color: '#ffffff',
     });
 
-    this.add.text(0, gameHeight / 2, `You ran out of ${codeToResourceName(this.props.reason as ResourceKeysType)}`, {
+    this.add.text(gameWidth * 0.01, gameHeight / 2, `You ran out of ${codeToResourceName(this.props.reason as ResourceKeysType)}`, {
       fontSize: '60px',
       fontFamily: "Helvetica",
       color: '#ffffff',

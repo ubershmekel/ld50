@@ -34,7 +34,7 @@ https://twitter.com/ubershmekel
 ## Last 6 hours plan
 
 * ✅Add icons to resource meters
-* Add weeks survived counter
+* ✅Add weeks survived counter
 * Splash screen art
 * Add explanations to splash screen
 * Add sounds to cards

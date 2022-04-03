@@ -15,6 +15,7 @@ export const SceneBattleKey = 'SceneBattle';
 
 export class SceneBattle extends Phaser.Scene {
   music!: MusicObj;
+  topText!: Phaser.GameObjects.Text;
 
   cards: CardObj[] = [];
   cubicle!: CubicleObj;
@@ -83,6 +84,7 @@ export class SceneBattle extends Phaser.Scene {
     this.checkWhetherToEndBattle();
 
     this.turnsAlive += 1;
+    this.topText.text = ("Week: " + this.turnsAlive);
   }
 
   dealFromDeck() {
@@ -114,14 +116,9 @@ export class SceneBattle extends Phaser.Scene {
     this.turnsAlive = 0;
     this.music.create();
 
-    // const cardsGroup = this.physics.add.group();
     this.dealFromDeck();
 
-    // this.cards.map((card) => {
-    //   card.create();
-    //   // cardsGroup.add(card);
-    // });
-    this.add.text(0, 0, "I don't know how to code", {
+    this.topText = this.add.text(gameWidth * 0.01, gameHeight * 0.01, "I don't know how to code, week 0", {
       fontSize: '40px',
       fontFamily: "Helvetica",
     });
