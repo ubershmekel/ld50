@@ -5,10 +5,32 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vite App</title>
+  <meta name="description" content="You do not know how to code. Try to survive in a coders shoes.">
+
+  <title>I don't know how to code</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-4533496-22"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-4533496-22');
+  </script>
+
 </head>
 
 <body>
+  <header>
+    <h1>I don't know how to code</h1>
+    <p>Congratulations, you landed your first software engineering role! The only problem is you don't know how to code.
+      See <a href="https://github.com/ubershmekel/ld50">source on github</a>.</p>
+    <p>Made for Ludum Dare. More info at the <a href="https://ldjam.com/events/ludum-dare/50/$280422">LD50
+        page</a>.</p>
+    <p>Please send questions via <a href="https://twitter.com/ubershmekel">twitter</a>.</p>
+    <!-- <div id="app"></div> -->
+    <img id="rotate-phone" src="/assets/rotate-phone.svg" />
+  </header>
 
   <div class="window-controls">
     <button onclick="_game.scale.toggleFullscreen()">fullscreen</button>
@@ -17,6 +39,7 @@
   </div>
 
   <div id="app"></div>
+
   <script type="module" src="/src/main.ts"></script>
 </body>
 

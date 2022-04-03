@@ -9,6 +9,7 @@ import { MusicObj } from './obj-music';
 import { ButtonObj } from './obj-button';
 import { SparklerObj } from './obj-sparkler';
 import { SceneLoseKey, SceneLoseProps } from './scene-lose';
+import { isInFullScreen, requestFullScreen } from './full-screener';
 
 export const SceneBattleKey = 'SceneBattle';
 
@@ -101,6 +102,13 @@ export class SceneBattle extends Phaser.Scene {
   }
 
   create(): void {
+    this.input.on('pointerdown', () => {
+      if (!isInFullScreen()) {
+        requestFullScreen(document.getElementById("app"));
+        // this.game.scale.startFullscreen();
+      }
+    });
+
     this.turnsAlive = 0;
     this.music.create();
 
@@ -149,7 +157,7 @@ export class SceneBattle extends Phaser.Scene {
       if (!valueChange) {
         continue;
       }
-      const bar = this.keyToBar[key as keyof typeof this.keyToBar];
+      const bar = this.keyToBar[key];
       bar.setValue(bar.getValue() + valueChange);
     }
 
