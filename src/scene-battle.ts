@@ -6,6 +6,7 @@ import { sampleSome, tweenPromise } from './utils';
 import { gameHeight, gameWidth } from './config';
 import { BarObj } from './obj-bar';
 import { MusicObj } from './obj-music';
+import { ButtonObj } from './obj-button';
 
 export class SceneBattle extends Phaser.Scene {
   music!: MusicObj;
@@ -20,6 +21,8 @@ export class SceneBattle extends Phaser.Scene {
   moneyBar!: BarObj;
   timeBar!: BarObj;
 
+  endTurnButton!: ButtonObj;
+
   constructor() {
     super({
       key: 'SceneBattle'
@@ -30,29 +33,63 @@ export class SceneBattle extends Phaser.Scene {
     this.music = new MusicObj(this);
     this.music.preload();
 
-    const randomCards = sampleSome(cardsList, 4);
-    randomCards.map((cardData, index) => {
-      const homePoint = new Phaser.Math.Vector2(300 + index * 180, 580);
-      const draggableCardObj = new CardObj(this, cardData, homePoint, this.onDragCard);
-      this.cards.push(draggableCardObj);
-      draggableCardObj;
-    });
-    this.cards.map((card) => card.preload());
+    CardObj.preload(this);
 
     CubicleObj.preload(this);
 
     this.preloadBars();
+
+    this.endTurnButton = new ButtonObj(this, {
+      width: gameWidth * 0.12,
+      height: gameHeight * 0.1,
+      text: "End turn",
+      outlinePx: 4,
+      outlineColor: 0x073497,
+      pointerDownColor: 0x343434,
+      pointerUpColor: 0x147474,
+      pointerOverColor: 0x545434,
+      pointerOutColor: 0x545454,
+    });
+
+    this.endTurnButton.x = gameWidth * 0.8;
+    this.endTurnButton.y = gameHeight * 0.8;
+    this.endTurnButton.onPress = () => {
+      this.endTurn();
+    };
   };
+
+  endTurn() {
+    this.dealFromDeck();
+    const timeLeft = this.timeBar.getValue() - 1;
+    this.timeBar.setValue(timeLeft);
+  }
+
+  dealFromDeck() {
+    this.cards.map((card) => {
+      card.destroy();
+    });
+    this.cards = [];
+    const randomCards = sampleSome(cardsList, 4);
+    randomCards.map((cardData, index) => {
+      const homePoint = new Phaser.Math.Vector2(300 + index * 180, 580);
+      const draggableCardObj = new CardObj(this, cardData, homePoint, this.onDragCard);
+      draggableCardObj.y = gameHeight;
+      this.cards.push(draggableCardObj);
+      draggableCardObj.create();
+    });
+
+  }
 
   create(): void {
     this.music.create();
 
-    const cardsGroup = this.physics.add.group();
+    // const cardsGroup = this.physics.add.group();
+    this.dealFromDeck();
 
-    this.cards.map((card) => {
-      card.create();
-      cardsGroup.add(card);
-    });
+    // this.cards.map((card) => {
+    //   card.create();
+    //   // cardsGroup.add(card);
+    // });
     this.add.text(0, 0, 'Project Progress', {
       fontSize: '40px',
       fontFamily: "Helvetica",
@@ -97,12 +134,12 @@ export class SceneBattle extends Phaser.Scene {
     };
     // this.moneyBar.setValue(Math.random() * 15);
     for (const key of resourceKeys) {
-      const value = this.activeCard.card[key as keyof CardData] as number | undefined;
-      if (!value) {
+      const valueChange = this.activeCard.card[key as keyof CardData] as number | undefined;
+      if (!valueChange) {
         continue;
       }
       const bar = keyToBar[key as keyof typeof keyToBar];
-      bar.setValue(bar.info.value + value);
+      bar.setValue(bar.getValue() + valueChange);
     }
 
     await tweenPromise(this, {

@@ -72,4 +72,8 @@ export class BarObj extends Phaser.GameObjects.Graphics {
     this.draw();
   };
 
+  getValue = () => {
+    return this.info.value;
+  };
+
 }

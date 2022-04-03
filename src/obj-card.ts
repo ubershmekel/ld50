@@ -18,9 +18,9 @@ export class CardObj extends Phaser.GameObjects.Container {
     scene.add.existing(this);
   }
 
-  preload() {
-    this.scene.load.image('card-object', gunRangeUrl);
-    this.scene.load.image(imageKey, cardbackUrl);
+  static preload(scene: Phaser.Scene) {
+    scene.load.image('card-object', gunRangeUrl);
+    scene.load.image(imageKey, cardbackUrl);
   }
 
   create() {

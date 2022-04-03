@@ -10,7 +10,7 @@ export class CubicleObj extends Phaser.GameObjects.Sprite {
   }
 
   static preload(scene: Phaser.Scene) {
-    console.log('preload', this);
+    // console.log('preload', this);
     scene.load.image({
       key: imageKey,
       url: cubicleUrl,
@@ -62,7 +62,7 @@ export class CubicleObj extends Phaser.GameObjects.Sprite {
     });
     await tweenPromise(this.scene, {
       targets: this,
-      scale: 1.0,
+      scale: 1.5,
       duration: 100,
     });
   }
