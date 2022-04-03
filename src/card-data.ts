@@ -97,6 +97,7 @@ export const cardsList: CardData[] = [
   },
   {
     title: "Take a long vacation",
+    money: -1,
     mgr: -3,
     mh: 3,
   },

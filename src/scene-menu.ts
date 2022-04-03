@@ -5,6 +5,8 @@ import splashUrl from '../assets/splash-screen.png';
 import { gameHeight, gameWidth } from './config';
 import { ButtonObj } from './obj-button';
 import { SceneBattleKey } from './scene-battle';
+import { isInFullScreen, requestFullScreen } from './full-screener';
+import { MusicObj } from './obj-music';
 
 const splashKey = 'splash';
 const welcomeKey = 'welcome';
@@ -28,6 +30,8 @@ export class SceneMenu extends Phaser.Scene {
     this.load.image(paperClipKey, particleUrl);
     this.load.image(splashKey, splashUrl);
     this.load.image(welcomeKey, welcomeUrl);
+
+    MusicObj.preload(this);
   }
 
   create(): void {
@@ -35,6 +39,15 @@ export class SceneMenu extends Phaser.Scene {
     const splashImage = this.add.image(0, 0, splashKey).setOrigin(0);
     splashImage.alpha = 0;
     welcomeImage.setInteractive();
+
+    this.input.on('pointerdown', () => {
+      if (!isInFullScreen()) {
+        requestFullScreen(document.getElementById("app"));
+        // this.game.scale.startFullscreen();
+      }
+    });
+
+    new MusicObj(this).create();
 
     const startButton = new ButtonObj(this, {
       width: gameWidth * 0.12,

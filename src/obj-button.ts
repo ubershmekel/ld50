@@ -126,7 +126,7 @@ export class ButtonObj extends Phaser.GameObjects.Container {
       targets: this,
       scale: 1.5,
       angle: 20,
-      duration: 300,
+      duration: 400,
       yoyo: true,
       ease: 'cubic',
     });

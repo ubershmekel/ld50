@@ -5,11 +5,9 @@ import { CardData, cardsList, codeToColor, resourceKeys } from './card-data';
 import { sampleSome, tweenPromise } from './utils';
 import { gameHeight, gameWidth } from './config';
 import { BarObj } from './obj-bar';
-import { MusicObj } from './obj-music';
 import { ButtonObj } from './obj-button';
 import { SparklerObj } from './obj-sparkler';
 import { SceneLoseKey, SceneLoseProps } from './scene-lose';
-import { isInFullScreen, requestFullScreen } from './full-screener';
 
 export const SceneBattleKey = 'SceneBattle';
 
@@ -17,7 +15,6 @@ export class SceneBattle extends Phaser.Scene {
   turnsAlive = 0;
   cardsUsedThisTurn = 0;
 
-  music!: MusicObj;
   topText!: Phaser.GameObjects.Text;
 
   cards: CardObj[] = [];
@@ -48,8 +45,6 @@ export class SceneBattle extends Phaser.Scene {
   }
 
   preload(): void {
-    this.music = new MusicObj(this);
-    this.music.preload();
 
     CardObj.preload(this);
 
@@ -113,15 +108,7 @@ export class SceneBattle extends Phaser.Scene {
   create(): void {
     this.createBars();
 
-    this.input.on('pointerdown', () => {
-      if (!isInFullScreen()) {
-        requestFullScreen(document.getElementById("app"));
-        // this.game.scale.startFullscreen();
-      }
-    });
-
     this.turnsAlive = 0;
-    this.music.create();
 
     this.dealFromDeck();
 
