@@ -55,6 +55,7 @@ export class CardObj extends Phaser.GameObjects.Container {
     this.setDepth(-2);
     this.setInteractive();
     this.scene.input.setDraggable(this);
+
     // this.scene.input.on('drag', (_pointer: Phaser.Input.Pointer, gameObject: Phaser.GameObjects.Sprite, dragX: number, dragY: number) => {
     this.on('drag', (_pointer: Phaser.Input.Pointer, dragX: number, dragY: number) => {
       // if (gameObject !== this) {

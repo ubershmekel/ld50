@@ -40,3 +40,9 @@ https://twitter.com/ubershmekel
 * Add sounds to cards
 * Add more cards
 * Maybe maybe make a card meta game
+
+## Last hour plan
+
+* Finish adding card sounds
+* Add a "next" button to the first splash screen so you don't miss the content there
+* Add something to make the goal of surviving weeks more obvious.

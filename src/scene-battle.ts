@@ -8,6 +8,7 @@ import { BarObj } from './obj-bar';
 import { ButtonObj } from './obj-button';
 import { SparklerObj } from './obj-sparkler';
 import { SceneLoseKey, SceneLoseProps } from './scene-lose';
+import { MusicObj } from './obj-music';
 
 export const SceneBattleKey = 'SceneBattle';
 
@@ -16,6 +17,7 @@ export class SceneBattle extends Phaser.Scene {
   cardsUsedThisTurn = 0;
 
   topText!: Phaser.GameObjects.Text;
+  music!: MusicObj;
 
   cards: CardObj[] = [];
   cubicle!: CubicleObj;
@@ -45,6 +47,7 @@ export class SceneBattle extends Phaser.Scene {
   }
 
   preload(): void {
+    this.music = new MusicObj(this);
 
     CardObj.preload(this);
 
@@ -95,14 +98,30 @@ export class SceneBattle extends Phaser.Scene {
     });
     this.cards = [];
     const randomCards = sampleSome(cardsList, 4);
-    randomCards.map((cardData, index) => {
-      const homePoint = new Phaser.Math.Vector2(300 + index * 180, 580);
-      const draggableCardObj = new CardObj(this, cardData, homePoint, this.onDragCard);
-      draggableCardObj.y = gameHeight;
-      this.cards.push(draggableCardObj);
-      draggableCardObj.create();
+    randomCards.map((cardData: CardData, index: number) => {
+      this.createCard(cardData, index);
     });
+  }
 
+  createCard(cardData: CardData, index: number) {
+    const homePoint = new Phaser.Math.Vector2(300 + index * 180, 580);
+    const draggableCardObj = new CardObj(this, cardData, homePoint, this.onDragCard);
+
+    draggableCardObj.y = gameHeight;
+    this.cards.push(draggableCardObj);
+    draggableCardObj.create();
+
+    const self = this;
+    draggableCardObj.on('dragstart', function () {
+      // An outer value of 'this' is shadowed by this container.
+      // 'this' implicitly has type 'any' because it does not have a type annotation
+      // @ts-ignore: I need `this` other this.
+      const card = this as CardObj;
+      self.music.playCardSound(card.card.id);
+    });
+  }
+
+  cardDragStart() {
   }
 
   create(): void {
@@ -185,6 +204,7 @@ export class SceneBattle extends Phaser.Scene {
 
   endBattle(resourceKey: string) {
     console.log("endbattle");
+    this.music.playEndGame();
     const sceneProps: SceneLoseProps = {
       reason: resourceKey,
       score: this.turnsAlive,

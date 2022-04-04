@@ -1,5 +1,4 @@
 import 'phaser';
-import gaspUrl from '../assets/gasp.mp3';
 import { codeToResourceName, ResourceKeysType } from './card-data';
 import { gameHeight, gameWidth } from './config';
 import { ButtonObj } from './obj-button';
@@ -26,7 +25,6 @@ export class SceneLose extends Phaser.Scene {
   }
 
   preload(): void {
-    this.load.audio('gasp', gaspUrl);
   }
 
   create(): void {
@@ -41,8 +39,6 @@ export class SceneLose extends Phaser.Scene {
       fontFamily: "Helvetica",
       color: '#ffffff',
     });
-
-    this.sound.play('gasp');
 
     const tryAgainButton = new ButtonObj(this, {
       width: gameWidth * 0.12,

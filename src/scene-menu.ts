@@ -63,7 +63,7 @@ export class SceneMenu extends Phaser.Scene {
 
     startButton.alpha = 0;
     startButton.x = gameWidth * 0.5 - startButton.info.width / 2;
-    startButton.y = gameHeight * 0.7;
+    startButton.y = gameHeight * 0.8;
     startButton.onPress = () => {
       this.scene.start(SceneBattleKey);
     };
@@ -97,7 +97,6 @@ export class SceneMenu extends Phaser.Scene {
 
   update(): void {
     if (this.startKey.isDown) {
-      this.sound.play('gasp');
       this.scene.start(this);
     }
 
