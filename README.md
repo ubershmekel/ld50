@@ -44,5 +44,5 @@ https://twitter.com/ubershmekel
 ## Last hour plan
 
 * ✅Finish adding card sounds
-* Add a "next" button to the first splash screen so you don't miss the content there
-* Add something to make the goal of surviving weeks more obvious.
+* ✅Add a "next" button to the first splash screen so you don't miss the content there
+* ✅Add something to make the goal of surviving weeks more obvious.

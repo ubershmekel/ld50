@@ -89,6 +89,9 @@ export class SceneBattle extends Phaser.Scene {
 
     this.turnsAlive += 1;
     this.topText.text = ("Week: " + this.turnsAlive);
+    if (this.turnsAlive == 2) {
+      this.topText.text = ("Week: " + this.turnsAlive + ' (i heard someone made it to week 13)');
+    }
   }
 
   dealFromDeck() {
