@@ -109,6 +109,7 @@ export class MusicObj extends Phaser.Sound.BaseSound {
     const idToMarker: {
       [id: string]: (keyof typeof soundMarkersTimes)[];
     } = {
+      gunrange: ['shoot'],
       party: ['woohoo'],
       saysmart: ['mmyeah'],
       baby: ['googoo'],

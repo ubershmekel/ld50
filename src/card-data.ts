@@ -44,7 +44,7 @@ export function codeToResourceName(code: ResourceKeysType) {
 
 export const cardsList: CardData[] = [
   {
-    id: "bgr",
+    id: "gunrange",
     title: "Take the boss to the gun range",
     mgr: 5,
     money: -3,

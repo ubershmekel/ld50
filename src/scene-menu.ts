@@ -7,6 +7,7 @@ import { ButtonObj } from './obj-button';
 import { SceneBattleKey } from './scene-battle';
 import { isInFullScreen, requestFullScreen } from './full-screener';
 import { MusicObj } from './obj-music';
+import { tweenPromise } from './utils';
 
 const splashKey = 'splash';
 const welcomeKey = 'welcome';
@@ -38,7 +39,6 @@ export class SceneMenu extends Phaser.Scene {
     const welcomeImage = this.add.image(0, 0, welcomeKey).setOrigin(0);
     const splashImage = this.add.image(0, 0, splashKey).setOrigin(0);
     splashImage.alpha = 0;
-    welcomeImage.setInteractive();
 
     this.input.on('pointerdown', () => {
       if (!isInFullScreen()) {
@@ -68,20 +68,50 @@ export class SceneMenu extends Phaser.Scene {
       this.scene.start(SceneBattleKey);
     };
 
-    welcomeImage.on('pointerup', () => {
-      splashImage.alpha = 1;
-      welcomeImage.alpha = 0;
-      startButton.alpha = 1;
-      startButton.pulse();
+    const nextButton = new ButtonObj(this, {
+      width: gameWidth * 0.12,
+      height: gameHeight * 0.1,
+      text: "Next",
+      outlinePx: 4,
+      outlineColor: 0x073497,
+      pointerDownColor: 0x343434,
+      pointerUpColor: 0x147474,
+      pointerOverColor: 0x545434,
+      pointerOutColor: 0x545454,
     });
 
 
-    // this.add.text(0, 0, 'Press S to restart scene', {
-    //   fontSize: '60px',
-    //   fontFamily: "Helvetica",
-    // });
+    nextButton.x = gameWidth / 4;
+    nextButton.y = 0;
+    nextButton.scale = 2;
+    tweenPromise(this, {
+      targets: nextButton,
+      x: gameWidth / 4,
+      y: gameHeight * 0.8,
+      scale: 1.0,
+      angle: 0,
+      duration: 800,
+      // ease: 'cubic',
+    });
 
-    // this.add.image(100, 100, 'particle');
+    nextButton.onPress = () => {
+      // welcomeImage.alpha = 0;
+      // nextButton.alpha = 0;
+      nextButton.destroy();
+      welcomeImage.destroy();
+
+      splashImage.alpha = 1;
+      startButton.alpha = 1;
+      startButton.pulse();
+    };
+
+    // welcomeImage.setInteractive();
+    // welcomeImage.on('pointerup', () => {
+    //   splashImage.alpha = 1;
+    //   welcomeImage.alpha = 0;
+    //   startButton.alpha = 1;
+    //   startButton.pulse();
+    // });
 
     const paperClipsCount = 20;
     for (let i = 0; i < paperClipsCount; i++) {
