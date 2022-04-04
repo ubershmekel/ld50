@@ -78,9 +78,10 @@ export class SceneLose extends Phaser.Scene {
       pointerOverColor: 0x545434,
       pointerOutColor: 0x545454,
     });
+    tryAgainButton.pulse();
 
     tryAgainButton.x = gameWidth * 0.7;
-    tryAgainButton.y = gameHeight * 0.7;
+    tryAgainButton.y = gameHeight * 0.4;
     tryAgainButton.onPress = () => {
       this.scene.start(SceneBattleKey);
     };
