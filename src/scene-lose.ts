@@ -34,10 +34,37 @@ export class SceneLose extends Phaser.Scene {
       color: '#ffffff',
     });
 
-    this.add.text(gameWidth * 0.01, gameHeight / 2, `You ran out of ${codeToResourceName(this.props.reason as ResourceKeysType)}`, {
+    const resourceKey = this.props.reason as ResourceKeysType;
+    const resourceName = codeToResourceName(resourceKey).toLowerCase();
+    const reasonText = `You ran out of ${resourceName}`;
+    this.add.text(gameWidth * 0.01, gameHeight / 2, reasonText, {
       fontSize: '60px',
       fontFamily: "Helvetica",
       color: '#ffffff',
+    });
+
+    const keyToStory = {
+      'mh': 'You had a mental breakdown, yelled at everyone, and punched the dog. How rude. Get out of here.',
+      'mgr': 'Your manager has decided to fire you immediately.',
+      'fr': "Your friends don't like you and have decided to talk to HR about it. You're out.",
+      'money': "You failed to pay rent, came to work stinky, and that was the last straw.",
+      'time': "Performance review time has arrived. What were you doing? You didn't code even a single line... Get out of here.",
+    };
+
+    const story = keyToStory[resourceKey];
+    this.add.text(gameWidth * 0.01, gameHeight * 0.64, story, {
+      fontSize: '20px',
+      fontFamily: "Helvetica",
+      color: '#ffffff',
+      wordWrap: { width: gameWidth / 2 },
+    });
+
+    const devNote = `Thank you for playing the game! I (the game dev) was able to make it up to week 13. Please leave a comment mentioning how far you got.`;
+    this.add.text(gameWidth * 0.01, gameHeight * 0.84, devNote, {
+      fontSize: '16px',
+      fontFamily: "Helvetica",
+      color: '#ffffff',
+      wordWrap: { width: gameWidth / 2 },
     });
 
     const tryAgainButton = new ButtonObj(this, {

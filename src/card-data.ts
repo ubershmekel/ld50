@@ -28,7 +28,7 @@ export const codeToColor = {
   time: 0x747474,
 };
 
-export function codeToResourceName(code: ResourceKeysType) {
+export function codeToResourceName(code: ResourceKeysType): string {
   const names: {
     [key in keyof Partial<CardData>]: string;
   } = {
@@ -39,7 +39,7 @@ export function codeToResourceName(code: ResourceKeysType) {
     time: "Time to performance review",
   };
 
-  return names[code];
+  return names[code] || '';
 }
 
 export const cardsList: CardData[] = [
